@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeesController extends Controller
 {
+
+     /**
+     * @var $request
+     */
+    private $request; 
+    
+    /**
+     * class constructor 
+     * @param  Request  $request
+     */
+    function __construct(Request $request) {
+        $this->request = $request;  
+    }
     /**
      * Show the list of employee
      *
@@ -37,12 +50,11 @@ class EmployeesController extends Controller
     /**
      * Store a new employee
      *
-     * @param  Request  $request
      * @return void
      */
-     public function store(Request $request)
+     public function store()
     {
-        $request->validate([
+        $this->request->validate([
             'employee'=>'required',
             'salary' => 'required', 
             'department_id' => 'required',
@@ -50,9 +62,9 @@ class EmployeesController extends Controller
 
         DB::table('employees')->insertOrIgnore(
             [
-                'employee_name' =>  $request->get('employee'), 
-                'department_id' =>   $request->get('department_id'),
-                'salary' =>   $request->get('salary')
+                'employee_name' =>  $this->request->get('employee'), 
+                'department_id' =>   $this->request->get('department_id'),
+                'salary' =>   $this->request->get('salary')
             ]
         );
 
@@ -75,7 +87,7 @@ class EmployeesController extends Controller
     }
 
     /**
-     * Edit the given employee
+     * Show the given employee
      *
      * @param  int  $id
      * @return \Illuminate\View\View
@@ -92,13 +104,12 @@ class EmployeesController extends Controller
     /**
      * Update the given employee
      *
-     * @param  Request  $request
      * @return  \Illuminate\View\View
      */
 
-    public function update(Request $request)
+    public function update()
     {
-        $request->validate([
+        $this->request->validate([
             'employee'=>'required',
             'salary' => 'required', 
             'id' => 'required',

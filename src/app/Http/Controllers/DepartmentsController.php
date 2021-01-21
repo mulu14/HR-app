@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\DB;
 class DepartmentsController  extends Controller
 {
     /**
+     * @var $request
+     */
+    private $request; 
+    
+    /**
+     * class constructor 
+     * @param  Request  $request
+     */
+    function __construct(Request $request) {
+        $this->request = $request;  
+    }
+    /**
      * Show the list of resources
      *
      * @param  void
@@ -26,7 +38,7 @@ class DepartmentsController  extends Controller
     }
 
     /**
-     * Create a new division
+     * Create a new department
      *
      * @param  void
      * @return \Illuminate\View\View
@@ -37,19 +49,19 @@ class DepartmentsController  extends Controller
     }
 
     /**
-     * Store a new division
+     * Store a new department
      *
-     * @param  Request  $request
      * @return  \Illuminate\View\View
      */
-    public function store(Request $request)
+    public function store()
     {
-        $request->validate([
-                'department'=>'required',
+      
+        $this->request->validate([
+                'department_name'=>'required',
             ]); 
 
         $query = DB::table('departments')
-                   ->where('department_name', '=', $request->get('department'))
+                   ->where('department_name', '=', $this->request->get('department_name'))
                    ->get();
 
         if (count($query) > 0) {
@@ -58,14 +70,14 @@ class DepartmentsController  extends Controller
         }
 
         DB::table('departments')->insertOrIgnore(
-            ['department_name' => $request->get('department')]
+            ['department_name' => $this->request->get('department_name')]
         );
 
          return redirect()->route('department.index');
     }
 
     /**
-     * Edit the given division
+     * Edit the given department
      *
      * @param  int  $id
      * @return \Illuminate\View\View
@@ -80,28 +92,27 @@ class DepartmentsController  extends Controller
     }
 
     /**
-     * Update the given division
+     * Update the given department
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return  \Illuminate\View\View
      */
-    public function update(Request $request)
+    public function update()
     {
 
-        $request->validate([
+        $this->request->validate([
             'department'=>'required',
             'id'=>'required',
         ]);
 
         DB::table('departments')
-            ->where('id', '=', $request->get('id'))
-            ->update(['department_name' => $request->get('department')]);
+            ->where('id', '=', $this->request->get('id'))
+            ->update(['department_name' => $this->request->get('department')]);
         
        return redirect()->route('department.index');
     }
 
     /**
-     * Delete the given division
+     * Delete the given department
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -113,7 +124,7 @@ class DepartmentsController  extends Controller
     }
 
    /**
-     * Return divisions where salary is greater than  50000 and 
+     * Return department where salary is greater than  50000 and 
      * The number of occurrences are more than one 
      * @param  void
      * @return array 
@@ -139,7 +150,7 @@ class DepartmentsController  extends Controller
     }
 
     /**
-     * Return the highest division salary 
+     * Return the highest department salary 
      * 
      * @param  void
      * @return array 

@@ -8,14 +8,34 @@ use App\Http\Controllers\DepartmentsController;
 
 class DepartmentTest extends TestCase
 {
-    /**@test*/
 
-    public function test_a_department_can_be_added_to_hr()
+
+   /**
+     * A basic functional save departement with empty input field
+     *
+     * @return void
+     */
+    public function test_department_can_not_save_with_empty_input_field()
     {
-       $response =  $this->post('/department', [
-            'department_name' => 'Accounting'
-        ]);
 
-        $response->assertOk();
+        $response = $this->json('POST', '/department', ['department_name' => '']);
+
+        $response
+            ->assertStatus(422); 
+    }
+     /**
+     * A basic functional see department page head tag
+     *
+     * @return void
+     */
+    public function test_department_index_page_has_header()
+    {
+
+        $response = $this->get('/'); 
+                       
+        $response
+            ->assertStatus(200)
+            ->assertSee('department')
+            ->assertSuccessful();  
     }
 }

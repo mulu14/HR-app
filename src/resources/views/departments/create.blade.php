@@ -5,7 +5,7 @@
         {{csrf_field()}}
         <div class="col-md-6">
             <label for="departmentName" class="form-label">Departement</label>
-            <input type="text" class="form-control" name="department">
+            <input type="text" class="form-control" name="department_name">
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Create</button>

@@ -88,8 +88,14 @@ class DepartmentTest extends TestCase
      */
     public function test_department_max_salary()
     {
+        $response = $this->post('/employees', [
+            'employee_name' => "Cool", 
+            'salary' => 1000, 
+            'department_id' => 2
+        ]); 
+
        $max = DepartmentsController::getHighestSalary(); 
-        $this->assertNotEquals(0, count($max));
+        $this->assertEquals(1, count($max));
     }
     /**
      * The department page has max salary
@@ -98,7 +104,17 @@ class DepartmentTest extends TestCase
      */
     public function test_department_max_over_fifty_thousand()
     {
+         $response = $this->post('/employees', [
+            'employee_name' => "Alex", 
+            'salary' => 650000, 
+            'department_id' => 1
+        ]); 
+         $response = $this->post('/employees', [
+            'employee_name' => "Dave", 
+            'salary' => 550000, 
+            'department_id' => 1
+        ]); 
        $max = DepartmentsController::getOverfiftythousand(); 
-        $this->assertNotEquals(0, count($max));
+        $this->assertEquals(2, count($max));
     }
 }

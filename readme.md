@@ -1,5 +1,6 @@
-This is HR application.
-The following are required:
+# HR application.
+
+The followings are required:
 
 1. Install docker in your local machine. Please visit https://docs.docker.com/desktop/ and read configration and installation instruction
 2. Clone the repo from github
@@ -15,4 +16,4 @@ The following are required:
 1.  From root directory Run docker exec -it php sh
 2.  Run vendor/bin/phpunit
 
-# Please contect me if the application does not work
+Please contect me if the application does not work

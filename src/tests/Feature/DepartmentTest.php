@@ -11,7 +11,7 @@ class DepartmentTest extends TestCase
 
 
    /**
-     * A basic functional save departement with empty input field
+     * Departement with empty input field fail validation
      *
      * @return void
      */
@@ -24,11 +24,11 @@ class DepartmentTest extends TestCase
             ->assertStatus(422); 
     }
      /**
-     * A basic functional see department page head tag
+     * The department page has head tag
      *
      * @return void
      */
-    public function test_department_index_page_has_header()
+    public function test_department_index_page_has_head_tag()
     {
 
         $response = $this->get('/'); 

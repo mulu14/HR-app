@@ -10,14 +10,14 @@ class DepartmentsController  extends Controller
     /**
      * @var $request
      */
-    private $request; 
+    private static $request; 
     
     /**
      * class constructor 
      * @param  Request  $request
      */
     function __construct(Request $request) {
-        $this->request = $request;  
+        self::$request = $request;  
     }
     /**
      * Show the list of resources
@@ -43,7 +43,7 @@ class DepartmentsController  extends Controller
      * @param  void
      * @return \Illuminate\View\View
      */
-    public function create() 
+    public static function create() 
     {
         return view('departments.create'); 
     }
@@ -53,15 +53,14 @@ class DepartmentsController  extends Controller
      *
      * @return  \Illuminate\View\View
      */
-    public function store()
+    public static function store()
     {
-      
-        $this->request->validate([
+        self::$request->validate([
                 'department_name'=>'required',
             ]); 
 
         $query = DB::table('departments')
-                   ->where('department_name', '=', $this->request->get('department_name'))
+                   ->where('department_name', '=', self::$request->get('department_name'))
                    ->get();
 
         if (count($query) > 0) {
@@ -70,7 +69,7 @@ class DepartmentsController  extends Controller
         }
 
         DB::table('departments')->insertOrIgnore(
-            ['department_name' => $this->request->get('department_name')]
+            ['department_name' => self::$request->get('department_name')]
         );
 
          return redirect()->route('department.index');
@@ -82,7 +81,7 @@ class DepartmentsController  extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public static function edit($id)
     {
         $department = DB::table('departments')
                         ->where('id', '=', $id)
@@ -96,17 +95,17 @@ class DepartmentsController  extends Controller
      *
      * @return  \Illuminate\View\View
      */
-    public function update()
+    public static function update()
     {
 
-        $this->request->validate([
+        self::$request->validate([
             'department'=>'required',
             'id'=>'required',
         ]);
 
         DB::table('departments')
-            ->where('id', '=', $this->request->get('id'))
-            ->update(['department_name' => $this->request->get('department')]);
+            ->where('id', '=',  self::$request->get('id'))
+            ->update(['department_name' =>  self::$request->get('department')]);
         
        return redirect()->route('department.index');
     }
@@ -117,7 +116,7 @@ class DepartmentsController  extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public static function destroy($id)
     {
         DB::table('departments')->where('id', '=', $id)->delete();
        return redirect()->route('department.index');

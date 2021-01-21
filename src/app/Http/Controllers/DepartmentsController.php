@@ -25,11 +25,11 @@ class DepartmentsController  extends Controller
      * @param  void
      * @return \Illuminate\View\View
      */
-    public function index() 
+    public static function index() 
     {
         $departments = DB::table('departments')->get(); 
-        $salaries = $this->getSalary(); 
-        $maxSalaries = $this->getMaxsalary(); 
+        $salaries = self::getHighestSalary(); 
+        $maxSalaries = self::getOverfiftythousand(); 
         return view('departments.index', [
             'departments' => $departments, 
             'salaries' => $salaries, 
@@ -68,11 +68,12 @@ class DepartmentsController  extends Controller
             return redirect()->route('department.create')->with('data', $data);
         }
 
-        DB::table('departments')->insertOrIgnore(
+       $q =  DB::table('departments')->insertOrIgnore(
             ['department_name' => self::$request->get('department_name')]
         );
 
-         return redirect()->route('department.index');
+        $created = 'New department is created';
+        return redirect()->route('department.create')->with('created', $created);
     }
 
     /**
@@ -128,7 +129,7 @@ class DepartmentsController  extends Controller
      * @param  void
      * @return array 
      */
-    public function getMaxsalary() 
+    public static function getOverfiftythousand() 
     {
 
         $query =  DB::select(
@@ -145,16 +146,17 @@ class DepartmentsController  extends Controller
                 d.id
             HAVING  frequency >= 2
             "); 
+        
         return $query; 
     }
 
     /**
-     * Return the highest department salary 
+     * Return the highest salary from each department
      * 
      * @param  void
      * @return array 
      */
-    public function getSalary() 
+    public static function getHighestSalary() 
     {
       $query =  DB::select(
             "SELECT

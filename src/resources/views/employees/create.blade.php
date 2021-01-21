@@ -34,6 +34,11 @@
                     <button type="submit" class="btn btn-primary">Create</button>
                 </div>
         </form>
+         @if (session()->get('employeecreated') !== null)
+            <div class="alert alert-success col-md-6 mt-3" role="alert">
+                <p>{{session()->get('employeecreated')}}</p>  
+            </div>
+         @endif
         </div>
     </div>
 </div>

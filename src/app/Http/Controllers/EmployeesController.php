@@ -67,8 +67,8 @@ class EmployeesController extends Controller
                 'salary' =>   $this->request->get('salary')
             ]
         );
-
-        return redirect()->route('employee.index');
+        $employeecreated = "New employee created"; 
+        return redirect()->route('employee.create')->with('employeecreated', $employeecreated );
     }
     
     /**

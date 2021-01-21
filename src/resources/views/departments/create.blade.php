@@ -16,4 +16,9 @@
           <p>{{session()->get('data')}}</p>  
         </div>
     @endif
+     @if (session()->get('created') !== null)
+        <div class="alert alert-success col-md-4 mt-3" role="alert">
+          <p>{{session()->get('created')}}</p>  
+        </div>
+    @endif
 @endsection

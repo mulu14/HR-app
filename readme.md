@@ -16,7 +16,7 @@ The followings are required:
 1.  From root directory RUN docker exec -it php sh
 2.  RUN vendor/bin/phpunit
 
-Please contect me if the application does not work
+Please contact me if the application does not work
 
 The application written in docker-compose/laravel
 
